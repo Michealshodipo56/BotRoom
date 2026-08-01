@@ -8,6 +8,11 @@
   margin: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+  transition: color-scheme 0.3s ease;
+}
+
 html,
 body {
   max-width: 100vw;
@@ -15,14 +20,17 @@ body {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-start-rgb));
+  transition: all 0.3s ease;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* Light theme */
+html.light {
+  color-scheme: light;
+}
+
+/* Dark theme */
+html.dark {
+  color-scheme: dark;
 }
 
 /* Custom scrollbar for webkit browsers */
@@ -34,11 +42,30 @@ body {
   background: rgba(0, 0, 0, 0.1);
 }
 
+.dark ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
 
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
 ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
+}
+
+/* Smooth transitions for theme switching */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
 }
