@@ -31,53 +31,61 @@ interface APIProvider {
 
 // Function to get available agents from configured providers
 const getAvailableAgents = (): Agent[] => {
-  const savedProviders = localStorage.getItem('botroom-api-providers');
-  if (!savedProviders) return [];
+  // Check if we're on the client side
+  if (typeof window === 'undefined') return [];
   
-  const providers: APIProvider[] = JSON.parse(savedProviders);
-  const agents: Agent[] = [];
-  
-  providers.forEach(provider => {
-    provider.models.forEach((model, index) => {
-      const agentId = `${provider.id}-${model}`;
-      
-      // Generate avatar and color based on provider
-      let avatar = '🤖';
-      let color = 'from-gray-600 to-gray-700';
-      
-      if (provider.name.toLowerCase().includes('openai')) {
-        avatar = '🌀';
-        color = 'from-blue-500 to-blue-600';
-      } else if (provider.name.toLowerCase().includes('anthropic') || provider.name.toLowerCase().includes('claude')) {
-        avatar = '🤖';
-        color = 'from-orange-500 to-orange-600';
-      } else if (provider.name.toLowerCase().includes('google') || provider.name.toLowerCase().includes('gemini')) {
-        avatar = '💎';
-        color = 'from-green-500 to-green-600';
-      } else if (provider.name.toLowerCase().includes('meta') || provider.name.toLowerCase().includes('llama')) {
-        avatar = '🦙';
-        color = 'from-purple-500 to-purple-600';
-      } else if (provider.name.toLowerCase().includes('mistral')) {
-        avatar = '🎭';
-        color = 'from-orange-500 to-red-500';
-      } else if (provider.name.toLowerCase().includes('perplexity')) {
-        avatar = '🔮';
-        color = 'from-teal-500 to-teal-600';
-      }
-      
-      agents.push({
-        id: agentId,
-        name: model,
-        model: model,
-        provider: provider.name,
-        avatar,
-        color,
-        status: 'idle'
+  try {
+    const savedProviders = localStorage.getItem('botroom-api-providers');
+    if (!savedProviders) return [];
+    
+    const providers: APIProvider[] = JSON.parse(savedProviders);
+    const agents: Agent[] = [];
+    
+    providers.forEach(provider => {
+      provider.models.forEach((model, index) => {
+        const agentId = `${provider.id}-${model}`;
+        
+        // Generate avatar and color based on provider
+        let avatar = '🤖';
+        let color = 'from-gray-600 to-gray-700';
+        
+        if (provider.name.toLowerCase().includes('openai')) {
+          avatar = '🌀';
+          color = 'from-blue-500 to-blue-600';
+        } else if (provider.name.toLowerCase().includes('anthropic') || provider.name.toLowerCase().includes('claude')) {
+          avatar = '🤖';
+          color = 'from-orange-500 to-orange-600';
+        } else if (provider.name.toLowerCase().includes('google') || provider.name.toLowerCase().includes('gemini')) {
+          avatar = '💎';
+          color = 'from-green-500 to-green-600';
+        } else if (provider.name.toLowerCase().includes('meta') || provider.name.toLowerCase().includes('llama')) {
+          avatar = '🦙';
+          color = 'from-purple-500 to-purple-600';
+        } else if (provider.name.toLowerCase().includes('mistral')) {
+          avatar = '🎭';
+          color = 'from-orange-500 to-red-500';
+        } else if (provider.name.toLowerCase().includes('perplexity')) {
+          avatar = '🔮';
+          color = 'from-teal-500 to-teal-600';
+        }
+        
+        agents.push({
+          id: agentId,
+          name: model,
+          model: model,
+          provider: provider.name,
+          avatar,
+          color,
+          status: 'idle'
+        });
       });
     });
-  });
-  
-  return agents;
+    
+    return agents;
+  } catch (error) {
+    console.error('Error loading agents from localStorage:', error);
+    return [];
+  }
 };
 
 const initialMessages: Message[] = [
@@ -106,6 +114,7 @@ const agents: Agent[] = [
     id: 'claude',
     name: 'Claude',
     model: 'Claude 3.5 Sonnet',
+    provider: 'Anthropic',
     status: 'active',
     avatar: 'C',
     color: 'from-purple-600 to-purple-700'
@@ -114,6 +123,7 @@ const agents: Agent[] = [
     id: 'gpt4',
     name: 'GPT-4o',
     model: 'GPT-4o',
+    provider: 'OpenAI',
     status: 'active', 
     avatar: 'G',
     color: 'from-blue-600 to-blue-700'
@@ -135,14 +145,27 @@ export default function ChatRoom({ params }: { params: { roomId: string } }) {
   const [availableAgents, setAvailableAgents] = useState<Agent[]>([]);
   const [activeAgents, setActiveAgents] = useState<Agent[]>(agents);
   const [searchQuery, setSearchQuery] = useState('');
+  const [mounted, setMounted] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
+  // Ensure component is mounted before accessing localStorage
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Load available agents from configured providers
   useEffect(() => {
-    const agents = getAvailableAgents();
-    setAvailableAgents(agents);
-  }, []);
+    if (mounted) {
+      try {
+        const agents = getAvailableAgents();
+        setAvailableAgents(agents);
+      } catch (error) {
+        console.error('Error loading available agents:', error);
+        setAvailableAgents([]);
+      }
+    }
+  }, [mounted]);
 
   // Filter available agents based on search
   const filteredAvailableAgents = availableAgents.filter(agent =>
@@ -181,7 +204,7 @@ export default function ChatRoom({ params }: { params: { roomId: string } }) {
     setInputMessage('');
     setIsTyping(true);
 
-    // Simulate AI responses (in real app, this would call your AI APIs)
+    // Simulate AI responses
     setTimeout(() => {
       const claudeResponse: Message = {
         id: (Date.now() + 1).toString(),
@@ -213,6 +236,18 @@ export default function ChatRoom({ params }: { params: { roomId: string } }) {
         return { name: 'Unknown', avatar: '?', color: 'from-gray-600 to-gray-700' };
     }
   };
+
+  // Don't render until mounted to avoid hydration issues
+  if (!mounted) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-white dark:bg-black">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading chat room...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen flex bg-white dark:bg-black transition-colors duration-300">

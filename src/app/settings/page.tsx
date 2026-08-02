@@ -30,21 +30,38 @@ export default function Settings() {
     models: []
   });
   const [newModel, setNewModel] = useState('');
+  const [mounted, setMounted] = useState(false);
+
+  // Ensure component is mounted before accessing localStorage
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Load providers from localStorage on component mount
   useEffect(() => {
-    const savedProviders = localStorage.getItem('botroom-api-providers');
-    if (savedProviders) {
-      setProviders(JSON.parse(savedProviders));
+    if (mounted) {
+      try {
+        const savedProviders = localStorage.getItem('botroom-api-providers');
+        if (savedProviders) {
+          setProviders(JSON.parse(savedProviders));
+        }
+      } catch (error) {
+        console.error('Error loading providers from localStorage:', error);
+        setProviders([]);
+      }
     }
-  }, []);
+  }, [mounted]);
 
   // Save providers to localStorage whenever providers change
   useEffect(() => {
-    if (providers.length > 0) {
-      localStorage.setItem('botroom-api-providers', JSON.stringify(providers));
+    if (mounted && providers.length > 0) {
+      try {
+        localStorage.setItem('botroom-api-providers', JSON.stringify(providers));
+      } catch (error) {
+        console.error('Error saving providers to localStorage:', error);
+      }
     }
-  }, [providers]);
+  }, [providers, mounted]);
 
   const handleAddProvider = () => {
     if (addForm.name && addForm.apiKey && addForm.models.length > 0) {
@@ -137,6 +154,18 @@ export default function Settings() {
     }
     setShowAddForm(true);
   };
+
+  // Don't render until mounted to avoid hydration issues
+  if (!mounted) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-black">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading settings...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white dark:bg-black transition-colors duration-300">
