@@ -1,6 +1,7 @@
 'use client';
 
 import { useTheme } from '@/contexts/ThemeContext';
+import { useEffect, useState } from 'react';
 
 const SunIcon = () => (
   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -15,7 +16,21 @@ const MoonIcon = () => (
 );
 
 export default function ThemeToggle() {
+  const [mounted, setMounted] = useState(false);
   const { theme, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    // Return a placeholder to prevent layout shift
+    return (
+      <div className="p-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/10 dark:bg-white/10 backdrop-blur-sm w-9 h-9">
+        <div className="w-5 h-5"></div>
+      </div>
+    );
+  }
 
   return (
     <button
