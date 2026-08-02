@@ -55,7 +55,7 @@ export default function Home() {
         {/* Navigation */}
         <nav className="flex items-center justify-between p-6 md:p-8">
           <div className="text-2xl font-bold bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent">
-            OmniMind AI
+            BotRoom
           </div>
           
           {/* Desktop Navigation */}
@@ -63,9 +63,9 @@ export default function Home() {
             <a href="#features" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">Features</a>
             <a href="#how-it-works" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">How it Works</a>
             <ThemeToggle />
-            <button className="bg-gradient-to-r from-brand-primary to-brand-secondary px-6 py-2 rounded-full text-white font-medium hover:from-purple-700 hover:to-blue-700 transition-all">
+            <a href="/dashboard" className="bg-gradient-to-r from-brand-primary to-brand-secondary px-6 py-2 rounded-full text-white font-medium hover:from-purple-700 hover:to-blue-700 transition-all inline-block">
               Get Started
-            </button>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -88,9 +88,9 @@ export default function Home() {
             <div className="flex flex-col space-y-4">
               <a href="#features" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">Features</a>
               <a href="#how-it-works" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">How it Works</a>
-              <button className="bg-gradient-to-r from-brand-primary to-brand-secondary px-6 py-2 rounded-full text-white font-medium hover:from-purple-700 hover:to-blue-700 transition-all w-fit">
+              <a href="/dashboard" className="bg-gradient-to-r from-brand-primary to-brand-secondary px-6 py-2 rounded-full text-white font-medium hover:from-purple-700 hover:to-blue-700 transition-all w-fit inline-block">
                 Get Started
-              </button>
+              </a>
             </div>
           </div>
         )}
@@ -111,9 +111,9 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <button className="bg-gradient-to-r from-brand-primary to-brand-secondary px-8 py-4 rounded-full text-white font-semibold text-lg hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg">
+            <a href="/dashboard" className="bg-gradient-to-r from-brand-primary to-brand-secondary px-8 py-4 rounded-full text-white font-semibold text-lg hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg inline-block">
               Create Your First Room
-            </button>
+            </a>
             <button className="border border-gray-300 dark:border-gray-600 px-8 py-4 rounded-full text-gray-900 dark:text-white font-semibold text-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-all">
               Watch Demo
             </button>
@@ -232,9 +232,9 @@ export default function Home() {
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
             Join the future of AI interaction. Create conversations that push the boundaries of artificial intelligence.
           </p>
-          <button className="bg-gradient-to-r from-brand-primary to-brand-secondary px-12 py-4 rounded-full text-white font-semibold text-xl hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 shadow-xl">
+          <a href="/dashboard" className="inline-block bg-gradient-to-r from-brand-primary to-brand-secondary px-12 py-4 rounded-full text-white font-semibold text-xl hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 shadow-xl">
             Start Your First AI Conversation
-          </button>
+          </a>
         </section>
 
         {/* Footer */}
