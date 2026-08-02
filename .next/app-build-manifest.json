@@ -1,41 +1,30 @@
 {
   "pages": {
-    "/_not-found/page": [
-      "static/chunks/webpack-357bf293babb87c5.js",
-      "static/chunks/fd9d1056-0b9695e3ab5c31f0.js",
-      "static/chunks/117-0083ab0d2bea410d.js",
-      "static/chunks/main-app-a564353b0c475551.js",
-      "static/chunks/app/_not-found/page-d981484ed91cca90.js"
-    ],
     "/layout": [
-      "static/chunks/webpack-357bf293babb87c5.js",
-      "static/chunks/fd9d1056-0b9695e3ab5c31f0.js",
-      "static/chunks/117-0083ab0d2bea410d.js",
-      "static/chunks/main-app-a564353b0c475551.js",
-      "static/css/873c5d53332adffa.css",
-      "static/chunks/app/layout-207e0534a77e01a0.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
     ],
     "/dashboard/page": [
-      "static/chunks/webpack-357bf293babb87c5.js",
-      "static/chunks/fd9d1056-0b9695e3ab5c31f0.js",
-      "static/chunks/117-0083ab0d2bea410d.js",
-      "static/chunks/main-app-a564353b0c475551.js",
-      "static/chunks/app/dashboard/page-65b0903607ca6d3c.js"
-    ],
-    "/page": [
-      "static/chunks/webpack-357bf293babb87c5.js",
-      "static/chunks/fd9d1056-0b9695e3ab5c31f0.js",
-      "static/chunks/117-0083ab0d2bea410d.js",
-      "static/chunks/main-app-a564353b0c475551.js",
-      "static/chunks/650-a0b5054c9d49b3aa.js",
-      "static/chunks/app/page-4143e802ba1748f2.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/dashboard/page.js"
     ],
     "/settings/page": [
-      "static/chunks/webpack-357bf293babb87c5.js",
-      "static/chunks/fd9d1056-0b9695e3ab5c31f0.js",
-      "static/chunks/117-0083ab0d2bea410d.js",
-      "static/chunks/main-app-a564353b0c475551.js",
-      "static/chunks/app/settings/page-497eb15349f3eee9.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/settings/page.js"
+    ],
+    "/chat/[roomId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/chat/[roomId]/page.js"
+    ],
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
     ]
   }
 }
