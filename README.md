@@ -99,7 +99,7 @@ import Orb from '@/components/Orb';
 
 ## Tech Stack
 
-- **Frontend**: Next.js 15, React 19, TypeScript
+- **Frontend**: Next.js 14, React 18, TypeScript
 - **Styling**: Tailwind CSS
 - **WebGL**: OGL library for 3D graphics
 - **Backend**: Go (planned)
@@ -111,12 +111,22 @@ import Orb from '@/components/Orb';
 ```
 src/
 ├── app/
+│   ├── api/
+│   ├── chat/[roomId]/
+│   ├── dashboard/
 │   ├── globals.css
 │   ├── layout.tsx
-│   └── page.tsx
+│   ├── page.tsx
+│   └── settings/
 ├── components/
-│   ├── Orb.css
-│   └── Orb.tsx
+│   ├── ClientWrapper.tsx
+│   ├── ErrorBoundary.tsx
+│   ├── Orb.tsx
+│   └── ThemeToggle.tsx
+├── contexts/
+│   └── ThemeContext.tsx
+└── hooks/
+    └── useLocalStorage.ts
 ```
 
 ## Development
